@@ -2,7 +2,7 @@
 # 模板
 
 # MySQL：参数文件 / 配置文件
-template_mysql_file_config: "mysql/my.cnf.j2"
+template_mysql_file_config: "mysql/my_{{ mysql_version }}.cnf.j2"
 
 # =====================
 # 文件
@@ -14,6 +14,12 @@ file_mysql_install_media: "install_media/mysql-5.7.32-linux-glibc2.12-x86_64.tar
 
 # =====================
 # 文件夹
+
+# MySQL：安装介质解压后路径
+# -- 安装介质包的名称
+# -- 该参数需要与【file_mysql_install_media】中的安装介质名称保持一致
+directory_mysql_install_media: "{{ directory_software_mysql }}/mysql-5.7.32-linux-glibc2.12-x86_64"
+directory_mysql_software_base_after_unzip: "{{ directory_mysql_software_base }}/mysql-5.7.32-linux-glibc2.12-x86_64"
 
 # =====================
 # 路径
@@ -28,10 +34,6 @@ path_mysql_log_relay: "{{ directory_mysql_log_relay }}/mysql-relay-bin"
 
 # MySQL：默认访问路径
 path_softlink_mysql_basedir_default: "/usr/local/mysql"
-
-# MySQL：安装介质解压后路径
-# -- 安装介质包的名称
-path_mysql_install_media: "{{ directory_software_mysql }}/mysql-5.7.32-linux-glibc2.12-x86_64"
 
 # MySQL：系统服务文件
 path_mysql_file_linux_service_src: "{{ path_softlink_mysql_basedir_default }}/support-files/mysql.server"
@@ -62,6 +64,12 @@ list_mysql_user:
 
 # =====================
 # 变量
+
+# MySQL：安装包类型
+# - rpm     / RPM包：需要创建本地YUM源，然后通过YUM安装
+# - binary  / 二进制包: 只需要解压到软件根目录
+# - source  / 源码包：需要解压后，执行：./configure / make / make install
+mysql_install_media_type: "binary"
 
 # MySQL：参数
 mysql_param_innodb_buffer_pool_size: "1G"

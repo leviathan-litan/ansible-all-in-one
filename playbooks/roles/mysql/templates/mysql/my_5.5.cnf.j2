@@ -233,7 +233,10 @@ innodb_io_capacity = 20000
 innodb_use_native_aio = 1
 
 # --------------- Undo
-innodb_undo_directory = {{ directory_mysql_undo }}
+
+# MySQL 5.5.x：不支持该参数
+#innodb_undo_directory = {{ directory_mysql_undo }}
+
 innodb_undo_tablespaces = 4
 innodb_undo_log_truncate = ON
 innodb_purge_threads = 4
@@ -242,17 +245,17 @@ innodb_max_purge_lag = 65536
 
 # --------------- MySQL 5.6
 # GTID
-gtid-mode = ON
-enforce-gtid-consistency = true
-optimizer_switch = 'mrr=on,mrr_cost_based=off,batched_key_access=on'
+#gtid-mode = ON
+#enforce-gtid-consistency = true
+#optimizer_switch = 'mrr=on,mrr_cost_based=off,batched_key_access=on'
 
 # --------------- MySQL 5.7
 #super_read_only = ON
-explicit_defaults_for_timestamp = ON
-secure_file_priv = null
-slave_parallel_type = LOGICAL_CLOCK
-slave_rows_search_algorithms = 'INDEX_SCAN,HASH_SCAN'
-innodb_page_cleaners = 4
+#explicit_defaults_for_timestamp = ON
+#secure_file_priv = null
+#slave_parallel_type = LOGICAL_CLOCK
+#slave_rows_search_algorithms = 'INDEX_SCAN,HASH_SCAN'
+#innodb_page_cleaners = 4
 
 # =====================
 # Finished

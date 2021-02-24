@@ -29,15 +29,28 @@
 
 # YUM：安装RPM包 / 使用Ansible的YUM模块
 # v1
+# -- 这种书写方法，在Ansible 2.11中不再被支持
+# -- 报错内容如下：
+# |- [DEPRECATION WARNING]: Invoking "yum" only once while using a loop via squash_actions is deprecated. Instead of using a loop to supply multiple items and specifying `name: "{{ item }}"`, please use `name: ['{{ list_yum_install_package }}']` and remove the loop. This feature will be removed in version 2.11. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+#- name: YUM：安装RPM包
+#  yum:
+#    # 禁用GPG检查
+#    # --- 这个在YUM REPO文件中已经禁用了，所以这里不用特别写出来
+#    disable_gpg_check: yes
+#    state: present
+#    name: "{{ item }}"
+#  with_items:
+#    - "{{ list_yum_install_package }}"
+
+# v2
+# -- 为了适应Ansible 2.11版本后的变化
 - name: YUM：安装RPM包
   yum:
     # 禁用GPG检查
     # --- 这个在YUM REPO文件中已经禁用了，所以这里不用特别写出来
-    #disable_gpg_check: yes
+    disable_gpg_check: yes
     state: present
-    name: "{{ item }}"
-  with_items:
-    - "{{ list_yum_install_package }}"
+    name: "{{ list_yum_install_package }}"
 
 # YUM：安装RPM包 / 使用Ansible的Shell模块发送安装命令
 #- name: YUM：安装RPM包

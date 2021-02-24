@@ -18,29 +18,51 @@
     dest: "{{ directory_software_mysql }}"
     # ---------------
 
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 安装方式：二进制包 / Begin
+
+# 将二进制包的解压文件移动到MySQL安装路径
+- name: 二进制包解压文件：移动到MySQL软件根目录
+  copy:
+    backup: yes
+    force: yes
+    owner: "{{ mysql_os_user_name }}"
+    group: "{{ mysql_os_user_name }}"
+    mode: 0755
+    # 如果【src】指定的路径是远端服务器上的地址，需要打开参数【remote_src】
+    remote_src: yes
+    src: "{{ directory_mysql_install_media }}"
+    dest: "{{ directory_mysql_software_base }}"
+  when: mysql_install_media_type == "binary"
+
 # 软链接：MySQL默认程序访问路径
+# -- 只有在二进制包安装的时候，才会涉及这一步
+# -- 只有当软件根目录与默认软链接路径不一致的时候，才需要执行这一步，创建软链接
 - name: 软链接：MySQL程序访问默认路径
   file:
     owner: "{{ mysql_os_user_name }}"
     group: "{{ mysql_os_user_name }}"
     mode: 0755
     state: link
-    src: "{{ path_mysql_install_media }}"
+    src: "{{ directory_mysql_software_base_after_unzip }}"
     dest: "{{ path_softlink_mysql_basedir_default }}"
+  when: mysql_install_media_type == "binary" and directory_mysql_software_base != path_softlink_mysql_basedir_default
 
 # 设置环境变量
 - name: 环境变量：设置
-  shell: "echo -e '\n# MySQL Database\nexport PATH={{ path_softlink_mysql_basedir_default }}/bin:$PATH\n' >> /etc/profile"
+  shell: "echo -e '\n# MySQL Database\nexport PATH={{ path_softlink_mysql_basedir_default }}/bin:$PATH\n' >> ~/.bash_profile"
+  when: mysql_install_media_type == "binary"
 
 # 验证环境变量设置
 - name: 环境变量：验证
-  shell: "source /etc/profile && mysql -V"
+  shell: "source ~/.bash_profile && mysql -V"
   register: mysql_version
+  when: mysql_install_media_type == "binary"
 
 # 显示MySQL的版本信息
 - name: MySQL：版本
   debug:
     msg: "{{ mysql_version.stdout_lines }}"
+  when: mysql_install_media_type == "binary"
 
 # 配置MySQL的Linux系统服务
 - name: MySQL：系统服务
@@ -54,3 +76,6 @@
     remote_src: yes
     src: "{{ path_mysql_file_linux_service_src }}"
     dest: "{{ path_mysql_file_linux_service_dest }}"
+  when: mysql_install_media_type == "binary"
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 安装方式：二进制包 / Finished
