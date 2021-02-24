@@ -19,6 +19,14 @@
   shell: "{{ path_mysql_bin_mysqld }} --initialize-insecure"
   # MySQL初始化完成后：启动MySQL服务
   #notify: mysql start
+  when: mysql_version == "5.7"
+
+# MySQL 5.5：初始化
+# -- 这个初始化一直都有问题
+# -- /usr/local/mysql/scripts/mysql_install_db --basedir=/usr/local/mysql --defaults-file=/etc/my.cnf --datadir=/data/mysql/db/ --user=mysql
+- name: MySQL 5.5：初始化
+  shell: "{{ path_mysql_scripts_mysql_install_db }} --basedir={{ path_softlink_mysql_basedir_default }} --defaults-file={{ path_mysql_file_config }} --datadir={{ directory_mysql_datadir }} --user=mysql"
+  when: mysql_version == "5.5"
 
 # MySQL：启动服务
 - name: MySQL：启动

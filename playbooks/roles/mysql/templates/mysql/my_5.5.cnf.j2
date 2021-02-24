@@ -39,7 +39,10 @@ open-files-limit = 65536
 # ========================== 通用
 
 # 默认存储引擎：InnoDB
-default-storage-engine = INNODB
+#skip-innodb
+
+# 选择存储引擎：MyISAM
+#default-storage-engine = MyISAM
 
 # 默认字符集
 character-set-server = utf8
@@ -71,7 +74,8 @@ max_connect_errors = {{ mysql_param_max_connect_errors }}
 
 max_allowed_packet = 64M
 
-slave_pending_jobs_size_max = 128M
+# MySQL 5.5：不支持该参数
+#slave_pending_jobs_size_max = 128M
 
 max_heap_table_size = 8M
 max_length_for_sort_data = 16k
@@ -87,7 +91,9 @@ join_buffer_size = 4M
 binlog_cache_size = 2M
 
 table_open_cache = 4096
-table_open_cache_instances = 2
+
+# MySQL 5.5：不支持该参数
+#table_open_cache_instances = 2
 table_definition_cache = 4096
 
 thread_cache_size = 512
@@ -101,7 +107,9 @@ query_cache_type = OFF
 
 # MySQL错误日志
 log-error = {{ path_mysql_log_error }}
-log_timestamps = SYSTEM
+
+# MySQL 5.5：不支持该参数
+#log_timestamps = SYSTEM
 
 slow_query_log
 slow_query_log_file = {{ path_mysql_log_slow }}
@@ -121,9 +129,16 @@ server-id = {{ mysql_server_id }}
 
 log-bin = {{ path_mysql_log_bin }}
 binlog-format = ROW
-binlog-checksum = CRC32
-binlog-rows-query-log-events = 1
-binlog_max_flush_queue_time = 1000
+
+# MySQL 5.5：不支持该参数
+#binlog-checksum = CRC32
+
+# MySQL 5.5：不支持该参数
+#binlog-rows-query-log-events = 1
+
+# MySQL 5.5：不支持该参数
+#binlog_max_flush_queue_time = 1000
+
 max_binlog_size = 512M
 
 # BINLOG过期时间
@@ -135,8 +150,12 @@ auto_increment_increment = 2
 auto_increment_offset = 2
 
 # --------------- 主库
-master-verify-checksum = 1
-master-info-repository = TABLE
+
+# MySQL 5.5：不支持该参数
+#master-verify-checksum = 1
+
+# MySQL 5.5：不支持该参数
+#master-info-repository = TABLE
 
 # --------------- 从库
 
@@ -146,15 +165,20 @@ log_bin_trust_function_creators = 1
 # 允许从库写日志
 #log_slave_updates = 1
 
-slave-parallel-workers = 4
-slave-sql-verify-checksum = 1
+# MySQL 5.5：不支持该参数
+#slave-parallel-workers = 4
+
+# MySQL 5.5：不支持该参数
+#slave-sql-verify-checksum = 1
 slave-net-timeout = 10
 
 # 从库端跳过部分同步时候的报错
 #slave-skip-errors = xxxxx
 
 relay-log = {{ path_mysql_log_relay }}
-relay-log-info-repository = TABLE
+
+# MySQL 5.5：不支持该参数
+#relay-log-info-repository = TABLE
 
 # 开启多线程复制后，如果从库意外挂掉：
 # 如果不能修改【sync_relay_log = 1】
@@ -180,30 +204,41 @@ myisam_recover_options = force
 # ========================== InnoDB
 # --------------- Data
 innodb_data_home_dir = {{ directory_mysql_innodb_homedir }}
-innodb_data_file_path = ibdata1:2048M:autoextend
+innodb_data_file_path = ibdata1:10M:autoextend
 innodb_file_per_table
 
 innodb_strict_mode = 1
 innodb_flush_method = O_DIRECT
-innodb_checksum_algorithm = CRC32
+
+# MySQL 5.5：不支持该参数
+#innodb_checksum_algorithm = CRC32
 innodb_autoinc_lock_mode = 2
 
 # 在MySQL 8.0中被移除，默认使用barracuda
 innodb_file_format = barracuda
 innodb_file_format_max = barracuda
-innodb_file_format_check = ON
+innodb_file_format_check = 1
 
 # --------------- Buffer Pool
 innodb_buffer_pool_size = {{ mysql_param_innodb_buffer_pool_size }}
 innodb_buffer_pool_instances = 4
 innodb_max_dirty_pages_pct = 75
-innodb_adaptive_flushing = ON
-innodb_flush_neighbors = 0
-innodb_lru_scan_depth = 4096
+innodb_adaptive_flushing = 1
+
+# MySQL 5.5：不支持该参数
+#innodb_flush_neighbors = 0
+
+# MySQL 5.5：不支持该参数
+#innodb_lru_scan_depth = 4096
+
 innodb_change_buffering = all
 innodb_old_blocks_time = 1000
-innodb_buffer_pool_dump_at_shutdown = ON
-innodb_buffer_pool_load_at_startup = ON
+
+# MySQL 5.5：不支持该参数
+#innodb_buffer_pool_dump_at_shutdown = ON
+
+# MySQL 5.5：不支持该参数
+#innodb_buffer_pool_load_at_startup = ON
 
 # 在MySQL 8.0中被废弃
 #innodb_adaptive_hash_index_partitions = 32
@@ -211,8 +246,12 @@ innodb_buffer_pool_load_at_startup = ON
 # --------------- Redo
 innodb_log_group_home_dir = {{ directory_mysql_innodb_group_homedir }}
 innodb_log_buffer_size = 128M
-innodb_log_file_size = 2G
+
+# MySQL 5.5：该参数与【innodb_log_files_in_group】的总和不要超过【4G】
+# -- 如果超过，可能导致MySQL启动失败
+innodb_log_file_size = 200M
 innodb_log_files_in_group = 2
+
 innodb_flush_log_at_trx_commit = 1
 innodb_fast_shutdown = 1
 
@@ -237,9 +276,14 @@ innodb_use_native_aio = 1
 # MySQL 5.5.x：不支持该参数
 #innodb_undo_directory = {{ directory_mysql_undo }}
 
-innodb_undo_tablespaces = 4
-innodb_undo_log_truncate = ON
-innodb_purge_threads = 4
+# MySQL 5.5：不支持该参数
+#innodb_undo_tablespaces = 4
+
+# MySQL 5.5：不支持该参数
+#innodb_undo_log_truncate = ON
+
+# MySQL 5.5
+innodb_purge_threads = 1
 innodb_purge_batch_size = 512
 innodb_max_purge_lag = 65536
 

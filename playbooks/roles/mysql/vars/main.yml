@@ -45,6 +45,9 @@ path_mysql_bin_mysqld: "{{ path_softlink_mysql_basedir_default }}/bin/mysqld"
 # MySQL：命令 mysqladmin
 path_mysql_bin_mysqladmin: "{{ path_softlink_mysql_basedir_default }}/bin/mysqladmin"
 
+# MySQL 5.5：mysql_install_db
+path_mysql_scripts_mysql_install_db: "{{ path_softlink_mysql_basedir_default }}/scripts/mysql_install_db"
+
 # MySQL：参数文件 / 配置文件
 path_mysql_file_config: "/etc/my.cnf"
 

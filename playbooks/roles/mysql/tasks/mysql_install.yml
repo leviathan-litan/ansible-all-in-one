@@ -78,4 +78,7 @@
     dest: "{{ path_mysql_file_linux_service_dest }}"
   when: mysql_install_media_type == "binary"
 
+# 另一个配置系统服务的方法：
+# chkconfig --add {{ path_mysql_file_linux_service_src }}
+
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 安装方式：二进制包 / Finished
