@@ -187,6 +187,7 @@ list_linux_user:
 # -- 会影响MySQL的参数文件的选择
 # 可选值：
 # - 5.7
+# - 5.5
 mysql_version: "5.7"
 
 mysql_os_user_name: "mysql"
