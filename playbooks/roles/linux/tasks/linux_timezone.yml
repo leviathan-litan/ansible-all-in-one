@@ -1,0 +1,12 @@
+# =====================
+# 任务：时区
+# =====================
+
+- name: 时区
+  file:
+    src: "{{ linux_timezone }}"
+    dest: /etc/localtime
+    owner: root
+    group: root
+    mode: 0755
+    state: link

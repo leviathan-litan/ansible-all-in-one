@@ -1,0 +1,14 @@
+# =====================
+# MySQL / Handlers
+# =====================
+
+# MySQL：启动
+# v1
+#- name: mysql start
+#  service:
+#    name: "mysql"
+#    state: started
+
+# v2
+- name: mysql start
+  shell: "service mysql start"

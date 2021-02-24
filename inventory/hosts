@@ -1,0 +1,9 @@
+# =====================
+# Ansible Inventory
+# =====================
+# --- 该文件中的主机信息，均为IP地址
+
+[mysql]
+192.168.232.11 linux_first_install=yes mysql_server_id=11
+#192.168.232.12 linux_first_install=yes mysql_server_id=12
+#192.168.232.13 linux_first_install=yes mysql_server_id=13

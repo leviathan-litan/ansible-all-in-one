@@ -1,0 +1,204 @@
+# =====================
+# 模板
+
+# /etc/hosts
+template_linux_etc_hosts: "etc/hosts.j2"
+
+# YUM源文件 / 开放网络
+templiate_linux_yum_repo_centos_online: "yum/CentOS_online.repo.j2"
+
+# =====================
+# 文件
+
+# =====================
+# 文件夹
+
+# ------------- 操作系统
+# YUM REPO
+directory_linux_yum_repo: "/etc/yum.repos.d"
+
+# 数据目录
+directory_data: "/data"
+
+# 备份目录
+directory_backup: "/backup"
+
+# 脚本目录
+directory_script: "/script"
+
+# 临时目录
+directory_temporary: "/temp_me"
+
+# 软件上传目录
+directory_software: "/software"
+
+# ISO挂载目录
+directory_mountpoint_iso: "/iso"
+
+# ------------- Java
+
+# 软件上传目录：Java
+#directory_software_java: "{{ directory_software }}/java"
+
+# ------------- 数据库：MySQL
+
+# MySQL安装介质上传目录
+directory_software_mysql: "{{ directory_software }}/mysql"
+
+# MySQL目录
+directory_mysql_var_lib: "/var/lib/mysql"
+
+# MySQL数据根目录
+directory_mysql_data_base: "{{ directory_data }}/mysql"
+
+# MySQL数据根目录 / 子目录
+directory_mysql_datadir: "{{ directory_mysql_data_base }}/db"
+directory_mysql_tmpdir: "{{ directory_mysql_data_base }}/tmp"
+directory_mysql_socket: "{{ directory_mysql_data_base }}/socket"
+directory_mysql_pid: "{{ directory_mysql_data_base }}/pid"
+directory_mysql_log_error: "{{ directory_mysql_data_base }}/log-error"
+directory_mysql_log_slow: "{{ directory_mysql_data_base }}/log-slow"
+directory_mysql_log_bin: "{{ directory_mysql_data_base }}/log-bin"
+directory_mysql_log_relay: "{{ directory_mysql_data_base }}/log-relay"
+directory_mysql_innodb_homedir: "{{ directory_mysql_data_base }}/innodb_home"
+directory_mysql_innodb_group_homedir: "{{ directory_mysql_data_base }}/innodb_group_home"
+directory_mysql_undo: "{{ directory_mysql_data_base }}/undo"
+
+# =====================
+# 路径
+
+# /etc/hosts
+path_linux_etc_hosts: "/etc/hosts"
+path_linux_etc_hosts_ansible: "/etc/hosts.ansible"
+
+# YUM / config
+path_linux_yum_conf: "/etc/yum.conf"
+
+# YUM / REPO
+# --- CentOS
+path_linux_yum_repo_centos_online: "{{ directory_linux_yum_repo }}/CentOS_online.repo"
+
+# SELinux
+path_linux_selinux: "/etc/selinux/config"
+
+# =====================
+# 列表
+
+# 目录
+list_directory_os:
+  # ------------------------
+  # 操作系统：Linux
+  - "{{ directory_data }}"
+  - "{{ directory_backup }}"
+  - "{{ directory_script }}"
+  - "{{ directory_temporary }}"
+  - "{{ directory_software }}"
+  #- "{{ directory_software_java }}"
+  - "{{ directory_mountpoint_iso }}"
+  # ------------------------
+
+list_directory_database_mysql:
+  # 数据库：MySQL
+  - "{{ directory_software_mysql }}"
+  - "{{ directory_mysql_data_base }}"
+  - "{{ directory_mysql_datadir }}"
+  - "{{ directory_mysql_tmpdir }}"
+  - "{{ directory_mysql_socket }}"
+  - "{{ directory_mysql_pid }}"
+  - "{{ directory_mysql_log_error }}"
+  - "{{ directory_mysql_log_slow }}"
+  - "{{ directory_mysql_log_bin }}"
+  - "{{ directory_mysql_log_relay }}"
+  - "{{ directory_mysql_innodb_homedir }}"
+  - "{{ directory_mysql_innodb_group_homedir }}"
+  - "{{ directory_mysql_undo }}"
+  - "{{ directory_mysql_var_lib }}"
+  # ------------------------
+
+# YUM REPO文件
+list_yum_repo_file:
+  - template: "{{ templiate_linux_yum_repo_centos_online }}"
+    path: "{{ path_linux_yum_repo_centos_online }}"
+
+# YUM 安装包
+list_yum_install_package:
+  # ------------
+  # 创建本地的YUM源
+  - createrepo
+  # ------------
+  # 自动化处理交互命令
+  - expect
+  - expect-devel
+  # ------------
+  - gcc
+  - gcc-c++
+  - glibc
+  - git
+  # ------------
+  # Linux默认的Java JDK支持
+  #- java-latest-openjdk
+  # ------------
+  - kernel-devel*
+  - lrzsz
+  - libnl
+  - libnl-devel
+  - libnfnetlink-devel
+  - make
+  # ------------
+  # Ansible的MySQL相关模块访问MySQL，需要安装这个RPM包
+  - MySQL-python
+  # ------------
+  - openssl-devel
+  - openssh-clients
+  - popt
+  - popt-devel
+  - tree
+  - wget
+  # ------------
+
+# Linux 用户组
+list_linux_user_group:
+  - group_name: "{{ mysql_os_user_name }}"
+    gid: "{{ mysql_os_user_id }}"
+
+# Linux 用户
+list_linux_user:
+  - username: "{{ mysql_os_user_name }}"
+    uid: "{{ mysql_os_user_id }}"
+    group: "{{ mysql_os_user_name }}"
+    groups:
+      - "{{ mysql_os_user_name }}"
+    shell: "/bin/bash"
+    dir_home: "/home/{{ mysql_os_user_name }}"
+    password: "{{ mysql_os_user_password }}"
+    comment: "MySQL Database - OS User"
+
+# =====================
+# 变量
+
+# ------------- 数据库：MySQL
+
+mysql_os_user_name: "mysql"
+mysql_os_user_password: "xxx"
+mysql_os_user_id: 2000
+
+# ------------- 操作系统
+
+# Linux版本号
+linux_arch_release: "7"
+
+# 时区
+linux_timezone: "/usr/share/zoneinfo/Asia/Shanghai"
+
+# 公共YUM源地址
+linux_yum_repo_centos_baseurl: "mirrors.aliyun.com"
+
+# 主机信息
+# -- 按照数组顺序，依次为：第一台服务器、第二台服务器，...
+host_info:
+  - ip: "192.168.232.11"
+    name: "mysql1"
+  - ip: "192.168.232.12"
+    name: "mysql2"
+  - ip: "192.168.232.13"
+    name: "mysql3"

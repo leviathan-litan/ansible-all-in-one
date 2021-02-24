@@ -1,0 +1,9 @@
+# =====================
+# 任务：防火墙
+# =====================
+
+- name: 防火墙
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no

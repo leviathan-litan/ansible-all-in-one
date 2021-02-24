@@ -1,0 +1,24 @@
+# =====================
+# Linux / 任务
+# =====================
+
+# 文件：/etc/hosts
+- import_tasks: linux_file_etc_hosts.yml
+
+# 创建用户
+- import_tasks: linux_user.yml
+
+# 创建目录
+- import_tasks: linux_directory.yml
+
+# YUM
+- import_tasks: linux_yum.yml
+
+# 防火墙
+- import_tasks: linux_firewall.yml
+
+# SELinux
+- import_tasks: linux_selinux.yml
+
+# 时区
+- import_tasks: linux_timezone.yml

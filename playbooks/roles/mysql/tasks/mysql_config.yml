@@ -1,0 +1,58 @@
+# =====================
+# MySQL / 配置
+# =====================
+
+# MySQL：参数文件
+- name: MySQL：参数文件
+  template:
+    backup: yes
+    src: "{{ template_mysql_file_config }}"
+    dest: "{{ path_mysql_file_config }}"
+    owner: "{{ mysql_os_user_name }}"
+    group: "{{ mysql_os_user_name }}"
+    mode: 0755
+
+# MySQL 5.7：初始化
+# 随机密码：mysqld --initialize
+# 无密码：mysqld --initialize-insecure
+- name: MySQL 5.7：初始化
+  shell: "{{ path_mysql_bin_mysqld }} --initialize-insecure"
+  # MySQL初始化完成后：启动MySQL服务
+  #notify: mysql start
+
+# MySQL：启动服务
+- name: MySQL：启动
+  shell: "service mysql start"
+
+# 软链接：MySQL Socket
+# --- 在启动MySQL服务后，才会有Socket文件
+- name: 软链接：MySQL Socket
+  file:
+    owner: "{{ mysql_os_user_name }}"
+    group: "{{ mysql_os_user_name }}"
+    mode: 0755
+    state: link
+    src: "{{ path_mysql_socket }}"
+    dest: "{{ directory_mysql_var_lib }}/mysql.sock"
+
+# MySQL：口令
+- name: MySQL：口令
+  shell: "{{ path_mysql_bin_mysqladmin }} -u root password '{{ mysql_db_superuser_password }}'"
+
+# MySQL：用户
+- name: MySQL：用户
+  mysql_user:
+    state: present
+    # ----- 登陆数据库
+    login_host: "localhost"
+    login_port: 3306
+    login_user: root
+    login_password: "{{ mysql_db_superuser_password }}"
+    # ----- 创建的用户的信息
+    name: "{{ item['username'] }}"
+    host: "{{ item['host'] }}"
+    password: "{{ item['password'] }}"
+    priv: "{{ item['priv'] }}"
+    # -----
+  with_items:
+    - "{{ list_mysql_user }}"

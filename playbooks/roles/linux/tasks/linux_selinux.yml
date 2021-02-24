@@ -1,0 +1,29 @@
+# =====================
+# 任务：SELinux
+# =====================
+
+# SELINUX：禁用
+- name: SELINUX：禁用
+  lineinfile:
+    backup: yes
+    backrefs: no
+    dest: "{{ path_linux_selinux }}"
+    regexp: "SELINUX="
+    line: "SELINUX=disabled"
+
+# SELINUX：宽容模式
+# 0 / Permissive
+# 1 / Enforcing
+- name: SELINUX：宽容模式
+  shell: setenforce 0
+  ignore_errors: yes
+
+# SELINUX：查看
+- name: SELINUX：状态
+  shell: sestatus
+  register: linux_selinux_status
+
+# SELINUX：显示
+- name: SELINUX：显示
+  debug:
+    msg: "{{ linux_selinux_status.stdout_lines }}"

@@ -1,0 +1,46 @@
+# =====================
+# 任务：Linux YUM
+# =====================
+
+# 文件：/etc/yum.conf
+- name: "文件：{{ path_linux_yum_conf }}"
+  lineinfile:
+    backup: yes
+    dest: "{{ path_linux_yum_conf }}"
+    backrefs: no
+    regexp: 'keepcache'
+    line: 'keepcache=1'
+
+# 上传YUM REPO文件
+- name: 文件：YUM REPO
+  template:
+    backup: yes
+    src: "{{ item.template }}"
+    dest: "{{ item.path }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ list_yum_repo_file }}"
+
+# YUM：刷新缓存
+- name: YUM：刷新缓存
+  shell: yum makecache
+
+# YUM：安装RPM包 / 使用Ansible的YUM模块
+# v1
+- name: YUM：安装RPM包
+  yum:
+    # 禁用GPG检查
+    # --- 这个在YUM REPO文件中已经禁用了，所以这里不用特别写出来
+    #disable_gpg_check: yes
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - "{{ list_yum_install_package }}"
+
+# YUM：安装RPM包 / 使用Ansible的Shell模块发送安装命令
+#- name: YUM：安装RPM包
+#  shell: "yum install -y {{ item }}"
+#  with_items:
+#    - "{{ list_yum_install_package }}"

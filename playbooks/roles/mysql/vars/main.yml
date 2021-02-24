@@ -1,0 +1,85 @@
+# =====================
+# 模板
+
+# MySQL：参数文件 / 配置文件
+template_mysql_file_config: "mysql/my.cnf.j2"
+
+# =====================
+# 文件
+
+# MySQL：安装介质
+# -- Linux Generic
+# -- 对于这样的安装介质，解压到哪里，就是安装到哪里
+file_mysql_install_media: "install_media/mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz"
+
+# =====================
+# 文件夹
+
+# =====================
+# 路径
+
+# MySQL：相关文件
+path_mysql_socket: "{{ directory_mysql_socket }}/mysql.sock"
+path_mysql_pid: "{{ directory_mysql_pid }}/mysql.pid"
+path_mysql_log_error: "{{ directory_mysql_log_error }}/mysql-error.log"
+path_mysql_log_slow: "{{ directory_mysql_log_slow }}/mysql-slow.log"
+path_mysql_log_bin: "{{ directory_mysql_log_bin }}/mysql-bin"
+path_mysql_log_relay: "{{ directory_mysql_log_relay }}/mysql-relay-bin"
+
+# MySQL：默认访问路径
+path_softlink_mysql_basedir_default: "/usr/local/mysql"
+
+# MySQL：安装介质解压后路径
+# -- 安装介质包的名称
+path_mysql_install_media: "{{ directory_software_mysql }}/mysql-5.7.32-linux-glibc2.12-x86_64"
+
+# MySQL：系统服务文件
+path_mysql_file_linux_service_src: "{{ path_softlink_mysql_basedir_default }}/support-files/mysql.server"
+path_mysql_file_linux_service_dest: "/etc/init.d/mysql"
+
+# MySQL：命令 mysqld
+path_mysql_bin_mysqld: "{{ path_softlink_mysql_basedir_default }}/bin/mysqld"
+
+# MySQL：命令 mysqladmin
+path_mysql_bin_mysqladmin: "{{ path_softlink_mysql_basedir_default }}/bin/mysqladmin"
+
+# MySQL：参数文件 / 配置文件
+path_mysql_file_config: "/etc/my.cnf"
+
+# =====================
+# 列表
+
+# MySQL：其他用户
+list_mysql_user:
+  - username: "{{ mysql_db_repl_user_name }}"
+    password: "{{ mysql_db_repl_user_password }}"
+    host: "%"
+    priv: "{{ mysql_db_repl_user_priv }}"
+  - username: "{{ mysql_db_mha_user_name }}"
+    password: "{{ mysql_db_mha_user_password }}"
+    host: "%"
+    priv: "{{ mysql_db_mha_user_priv }}"
+
+# =====================
+# 变量
+
+# MySQL：参数
+mysql_param_innodb_buffer_pool_size: "1G"
+mysql_param_max_connections: "12000"
+mysql_param_max_connect_errors: "100000"
+
+# MySQL：超级用户
+# -- 用户名: root@localhost
+# -- 口令
+mysql_db_superuser_password: "oracle"
+
+# MySQL：其他用户
+# -- 复制用户
+mysql_db_repl_user_name: "repl"
+mysql_db_repl_user_password: "oracle"
+mysql_db_repl_user_priv: "*.*:REPLICATION SLAVE,REPLICATION CLIENT"
+
+# -- MHA管理用户
+mysql_db_mha_user_name: "mha"
+mysql_db_mha_user_password: "oracle"
+mysql_db_mha_user_priv: "*.*:ALL"

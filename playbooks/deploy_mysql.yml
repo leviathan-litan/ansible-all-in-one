@@ -1,0 +1,28 @@
+# =====================
+# 部署：MySQL
+# =====================
+
+# ----------- Linux
+- name: Linux
+  hosts:
+    - all
+  #vars_files:
+  #  - "xxxx"
+  roles:
+    - { role: linux }
+
+# ----------- MySQL
+- name: MySQL
+  hosts:
+    - mysql
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: mysql }
+
+# -----------
+
+# -----------
+
+# =====================
+# Finished

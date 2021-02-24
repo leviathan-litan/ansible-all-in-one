@@ -1,0 +1,17 @@
+# =====================
+# Linux 文件：/etc/hosts
+# =====================
+
+# 默认
+#127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+#::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# 主网卡 / Public
+{% for item in host_info %}
+
+# --- Host: {{ item.name }}
+{{ item.ip }}   {{ item.name }}
+{% endfor %}
+
+# =====================
+# 结束

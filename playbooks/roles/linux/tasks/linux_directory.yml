@@ -1,0 +1,21 @@
+# =====================
+# 任务：目录
+# =====================
+
+- name: 目录创建：操作系统
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items: "{{ list_directory_os }}"
+
+- name: 目录创建：MySQL数据库
+  file:
+    path: "{{ item }}"
+    owner: "{{ mysql_os_user_name }}"
+    group: "{{ mysql_os_user_name }}"
+    mode: 0755
+    state: directory
+  with_items: "{{ list_directory_database_mysql }}"

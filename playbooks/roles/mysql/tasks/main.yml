@@ -1,0 +1,9 @@
+# =====================
+# MySQL / 任务
+# =====================
+
+# MySQL：软件安装
+- import_tasks: mysql_install.yml
+
+# MySQL：配置
+- import_tasks: mysql_config.yml

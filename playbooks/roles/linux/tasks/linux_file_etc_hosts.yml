@@ -1,0 +1,48 @@
+# =====================
+# 任务：/etc/hosts
+# =====================
+
+- name: 显示：变量[host_info]
+  debug:
+    msg: "{{ host_info }}"
+
+# --- 如果是第一次安装的话，按照模板刷文件：/etc/hosts
+- name: "文件：{{ path_linux_etc_hosts }} / 第一次安装"
+  template:
+    backup: yes
+    src: "{{ template_linux_etc_hosts }}"
+    dest: "{{ path_linux_etc_hosts }}"
+    owner: root
+    group: root
+    mode: 0755
+  when: linux_first_install == "yes"
+
+# --- 如果不是第一次安装，那么文件应该就已经是模板的格式
+# |-- 那么，就往文件的目标位置刷文件
+
+- name: 文件：/etc/hosts.ansible / 清空
+  shell: "echo '' > {{ path_linux_etc_hosts_ansible }}"
+  when: linux_first_install == "no"
+
+- name: 文件：/etc/hosts.ansible / 填充
+  shell: "echo '# --- Host: {{ item.name }}\n{{ item.ip }}   {{ item.name }}\n' >> {{ path_linux_etc_hosts_ansible }}"
+  with_items:
+    - "{{ host_info }}"
+  when: linux_first_install == "no"
+
+- name: 文件：/etc/hosts.ansible / 写入变量
+  shell: "cat {{ path_linux_etc_hosts_ansible }}"
+  register: path_linux_etc_hosts_ansible_content
+  when: linux_first_install == "no"
+
+- name: "文件：{{ path_linux_etc_hosts }} / 非第一次安装"
+  blockinfile:
+    path: "{{ path_linux_etc_hosts }}"
+    marker: "# {mark} Add Hosts Record by Ansible"
+    backup: yes
+    create: yes
+    state: present
+    block: "{{ path_linux_etc_hosts_ansible_content.stdout }}"
+    insertafter: "^# 主网卡 / Public"
+    #insertbefore: "^# --- Host"
+  when: linux_first_install == "no"

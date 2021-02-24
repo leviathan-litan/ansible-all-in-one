@@ -1,0 +1,111 @@
+# =====================================
+# CentOS / YUM REPO 文件
+# =====================================
+
+# 使用互联网的YUM源
+# --- 使用该YUM源的时候，需要联网，否则会因为无法访问YUM仓库，而导致YUM安装RPM失败
+
+# =====================================
+# CentOS / Base REPO
+# =====================================
+
+[base]
+name=CentOS-7 - Base - {{ linux_yum_repo_centos_baseurl }}
+failovermethod=priority
+baseurl=http://{{ linux_yum_repo_centos_baseurl }}/centos/7/os/$basearch/
+        http://mirrors.aliyuncs.com/centos/7/os/$basearch/
+        http://mirrors.cloud.aliyuncs.com/centos/7/os/$basearch/
+gpgcheck=0
+gpgkey=http://{{ linux_yum_repo_centos_baseurl }}/centos/RPM-GPG-KEY-CentOS-7
+
+# =====================================
+# released updates 
+# =====================================
+
+[updates]
+name=CentOS-7 - Updates - {{ linux_yum_repo_centos_baseurl }}
+failovermethod=priority
+baseurl=http://{{ linux_yum_repo_centos_baseurl }}/centos/7/updates/$basearch/
+        http://mirrors.aliyuncs.com/centos/7/updates/$basearch/
+        http://mirrors.cloud.aliyuncs.com/centos/7/updates/$basearch/
+gpgcheck=0
+gpgkey=http://{{ linux_yum_repo_centos_baseurl }}/centos/RPM-GPG-KEY-CentOS-7
+
+# =====================================
+# additional packages that may be useful
+# =====================================
+
+[extras]
+name=CentOS-7 - Extras - {{ linux_yum_repo_centos_baseurl }}
+failovermethod=priority
+baseurl=http://{{ linux_yum_repo_centos_baseurl }}/centos/7/extras/$basearch/
+        http://mirrors.aliyuncs.com/centos/7/extras/$basearch/
+        http://mirrors.cloud.aliyuncs.com/centos/7/extras/$basearch/
+gpgcheck=0
+gpgkey=http://{{ linux_yum_repo_centos_baseurl }}/centos/RPM-GPG-KEY-CentOS-7
+
+# =====================================
+# additional packages that extend functionality of existing packages
+# =====================================
+
+[centosplus]
+name=CentOS-7 - Plus - {{ linux_yum_repo_centos_baseurl }}
+failovermethod=priority
+baseurl=http://{{ linux_yum_repo_centos_baseurl }}/centos/7/centosplus/$basearch/
+        http://mirrors.aliyuncs.com/centos/7/centosplus/$basearch/
+        http://mirrors.cloud.aliyuncs.com/centos/7/centosplus/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=http://{{ linux_yum_repo_centos_baseurl }}/centos/RPM-GPG-KEY-CentOS-7
+
+# =====================================
+# contrib - packages by Centos Users
+# =====================================
+
+[contrib]
+name=CentOS-7 - Contrib - {{ linux_yum_repo_centos_baseurl }}
+failovermethod=priority
+baseurl=http://{{ linux_yum_repo_centos_baseurl }}/centos/7/contrib/$basearch/
+        http://mirrors.aliyuncs.com/centos/7/contrib/$basearch/
+        http://mirrors.cloud.aliyuncs.com/centos/7/contrib/$basearch/
+gpgcheck=0
+enabled=0
+gpgkey=http://{{ linux_yum_repo_centos_baseurl }}/centos/RPM-GPG-KEY-CentOS-7
+
+# =====================================
+# CentOS 7 / EPEL
+# =====================================
+
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+baseurl=https://{{ linux_yum_repo_centos_baseurl }}/epel/7/$basearch
+        https://mirrors.tuna.tsinghua.edu.cn/epel/7/$basearch
+#mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+
+[epel-debuginfo]
+name=Extra Packages for Enterprise Linux 7 - $basearch - Debug
+baseurl=https://{{ linux_yum_repo_centos_baseurl }}/epel/7/$basearch/debug
+        https://mirrors.tuna.tsinghua.edu.cn/epel/7/$basearch/debug
+#mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-debug-7&arch=$basearch
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=0
+
+[epel-source]
+name=Extra Packages for Enterprise Linux 7 - $basearch - Source
+baseurl=https://{{ linux_yum_repo_centos_baseurl }}/epel/7/SRPMS
+        https://mirrors.tuna.tsinghua.edu.cn/epel/7/SRPMS
+#mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-source-7&arch=$basearch
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck=0
+
+# =====================================
+# Finished.
+# =====================================
