@@ -1,0 +1,6 @@
+# =====================
+# Python / 任务
+# =====================
+
+# 安装Python
+- import_tasks: python_install.yml

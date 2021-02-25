@@ -1,0 +1,53 @@
+# =====================
+# Python / 变量文件
+# =====================
+
+# =====================
+# 模板
+
+template_python_pip_conf: "python/pip.conf.j2"
+
+# =====================
+# 文件
+
+# Python 安装介质
+file_python_install_media: "install_media/{{ python_install_media_name }}.tgz"
+
+# =====================
+# 文件夹
+
+directory_software_python: "{{ directory_software }}/python"
+
+directory_software_python_after_unzip: "{{ directory_software_python }}/{{ python_install_media_name }}"
+
+directory_python_software_base: "/usr/local/python/{{ python_install_media_name }}"
+
+directory_python_pip: "~/.pip"
+
+# =====================
+# 路径
+
+path_python_source_install_log_configure: "{{ directory_software_python }}/python_source_install_configure.log"
+path_python_source_install_log_make: "{{ directory_software_python }}/python_source_install_make.log"
+path_python_source_install_log_make_install: "{{ directory_software_python }}/python_source_install_make_install.log"
+
+path_python_pip_conf: "{{ directory_python_pip }}/pip.conf"
+
+# =====================
+# 列表
+
+list_pip_install_package:
+  - "arrow"
+  - "Django"
+  - "Flask"
+  - "PyMySQL"
+
+# =====================
+# 变量
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 需要修改的地方：Begin
+
+python_install_media_name: "Python-3.9.2"
+python_pip_source: "pypi.tuna.tsinghua.edu.cn"
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 需要修改的地方：Finished

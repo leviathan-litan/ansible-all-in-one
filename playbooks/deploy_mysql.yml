@@ -5,9 +5,9 @@
 # ----------- Linux
 - name: Linux
   hosts:
-    - all
-  #vars_files:
-  #  - "xxxx"
+    - mysql
+  vars_files:
+    - "roles/mysql/vars/main.yml"
   roles:
     - { role: linux }
 

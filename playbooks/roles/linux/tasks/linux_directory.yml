@@ -11,11 +11,20 @@
     state: directory
   with_items: "{{ list_directory_os }}"
 
-- name: 目录创建：MySQL数据库
+#- name: 目录创建：MySQL数据库
+#  file:
+#    path: "{{ item }}"
+#    owner: "{{ mysql_os_user_name }}"
+#    group: "{{ mysql_os_user_name }}"
+#    mode: 0755
+#    state: directory
+#  with_items: "{{ list_directory_database_mysql }}"
+
+- name: 目录创建：Python
   file:
     path: "{{ item }}"
-    owner: "{{ mysql_os_user_name }}"
-    group: "{{ mysql_os_user_name }}"
+    owner: root
+    group: root
     mode: 0755
     state: directory
-  with_items: "{{ list_directory_database_mysql }}"
+  with_items: "{{ list_directory_python }}"

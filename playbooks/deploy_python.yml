@@ -1,0 +1,27 @@
+# =====================
+# 部署：Python
+# =====================
+# -- 安装方式：源码包安装
+# -- 介质来源：Python.org
+# -- 官方下载页：https://www.python.org/downloads/
+
+# ----------- Linux
+- name: Linux
+  hosts:
+    - python
+  vars_files:
+    - "roles/python/vars/main.yml"
+  roles:
+    - { role: linux }
+
+# ----------- Python
+- name: Python
+  hosts:
+    - python
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: python }
+
+# =====================
+# Finished

@@ -1,0 +1,60 @@
+# =====================
+# MySQL / 软件安装
+# =====================
+
+# 上传安装介质
+- name: 安装：上传安装介质
+  unarchive:
+    # ---------------
+    # 解压后权限
+    owner: root
+    group: root
+    mode: 0755
+    # ---------------
+    # 解压操作
+    # -- 解压文件
+    src: "{{ file_python_install_media }}"
+    # -- 解压目标
+    dest: "{{ directory_software_python }}"
+    # ---------------
+
+# 源码包安装：configure
+- name: 源码包安装：configure
+  shell: "cd {{ directory_software_python_after_unzip }} && ./configure --prefix={{ directory_python_software_base }} > {{ path_python_source_install_log_configure }}"
+
+# 源码包安装：make
+- name: 源码包安装：make
+  shell: "cd {{ directory_software_python_after_unzip }} && make > {{ path_python_source_install_log_make }}"
+
+# 源码包安装：make install
+- name: 源码包安装：make install
+  shell: "cd {{ directory_software_python_after_unzip }} && make install > {{ path_python_source_install_log_make_install }}"
+
+# 环境变量
+- name: 环境变量
+  shell: "echo -e '\n# Python\nexport PATH={{ directory_python_software_base }}/bin:$PATH\n' >> ~/.bash_profile"
+
+# 获取：Python版本信息
+- name: 获取：Python版本信息
+  shell: "source ~/.bash_profile && python -V"
+  register: os_command_result_python_version
+
+# 显示：Python版本
+- name: 显示：Python版本信息
+  debug:
+    msg: "{{ os_command_result_python_version }}"
+
+# Python PIP
+- name: Python PIP
+  template:
+    backup: yes
+    src: "{{ template_python_pip_conf }}"
+    dest: "{{ path_python_pip_conf }}"
+    owner: root
+    group: root
+    mode: 0755
+
+# PIP Install Model
+- name: PIP：安装模块
+  shell: "source ~/.bash_profile && pip3 install {{ item }}"
+  with_items: "{{ list_pip_install_package }}"

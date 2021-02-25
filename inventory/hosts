@@ -2,8 +2,32 @@
 # Ansible Inventory
 # =====================
 # --- 该文件中的主机信息，均为IP地址
+#
+# 注意：
+# --- 如果是第一次用Ansible安装的机器：
+# --- linux_first_install=yes
+# --- 如果不是第一次用Ansible安装的机器：
+# --- linux_first_install=no
 
 [mysql]
 192.168.232.11 linux_first_install=yes mysql_server_id=11
-#192.168.232.12 linux_first_install=yes mysql_server_id=12
-#192.168.232.13 linux_first_install=yes mysql_server_id=13
+192.168.232.12 linux_first_install=yes mysql_server_id=12
+192.168.232.13 linux_first_install=yes mysql_server_id=13
+
+[python]
+# Python 版本信息：
+# [以下记录的版本信息，截至：2021-2-25]
+# -- 大版本
+# |- 3 / 3.x x=latest - 3.9.2
+# |- 2 / 2.x x=latest - 2.7.18
+# -- 小版本
+# |- 3.9 / 3.9.x x=latest - 3.9.2
+# |- 3.8 / 3.8.x x=latest - 3.8.8
+# |- 3.7 / 3.7.x x=latest - 3.7.10
+# |- 3.6 / 3.6.x x=latest - 3.6.13
+# |- 2.7 / 2.7.x x=latest - 2.7.18 / RHEL 7.x + CentOS 7.x 默认 2.7.5
+
+192.168.232.11 linux_first_install=yes
+
+# =====================
+# Finished
