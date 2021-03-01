@@ -38,7 +38,7 @@ directory_mountpoint_iso: "/iso"
 # ------------- Java
 
 # 软件上传目录：Java
-#directory_software_java: "{{ directory_software }}/java"
+directory_software_java: "{{ directory_software }}/java"
 
 # ------------- 数据库：MySQL
 
@@ -66,6 +66,13 @@ directory_mysql_log_relay: "{{ directory_mysql_data_base }}/log-relay"
 directory_mysql_innodb_homedir: "{{ directory_mysql_data_base }}/innodb_home"
 directory_mysql_innodb_group_homedir: "{{ directory_mysql_data_base }}/innodb_group_home"
 directory_mysql_undo: "{{ directory_mysql_data_base }}/undo"
+
+# ------------- Python
+
+directory_software_python: "{{ directory_software }}/python"
+directory_software_python_after_unzip: "{{ directory_software_python }}/{{ python_install_media_name }}"
+directory_python_software_base: "/usr/local/python/{{ python_install_media_name }}"
+directory_python_pip: "~/.pip"
 
 # =====================
 # 路径
@@ -96,8 +103,12 @@ list_directory_os:
   - "{{ directory_script }}"
   - "{{ directory_temporary }}"
   - "{{ directory_software }}"
-  #- "{{ directory_software_java }}"
   - "{{ directory_mountpoint_iso }}"
+  # ------------------------
+
+list_directory_java:
+  # Java
+  - "{{ directory_software_java }}"
   # ------------------------
 
 list_directory_database_mysql:
@@ -120,9 +131,11 @@ list_directory_database_mysql:
   # ------------------------
 
 list_directory_python:
+  # Python
   - "{{ directory_software_python }}"
   - "{{ directory_python_software_base }}"
   - "{{ directory_python_pip }}"
+  # ------------------------
 
 # YUM REPO文件
 list_yum_repo_file:
@@ -195,7 +208,7 @@ list_linux_user:
 mysql_version: "5.7"
 
 mysql_os_user_name: "mysql"
-mysql_os_user_password: "xxx"
+mysql_os_user_password: "oracle"
 mysql_os_user_id: 2000
 
 # ------------- 操作系统

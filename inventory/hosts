@@ -8,11 +8,13 @@
 # --- linux_first_install=yes
 # --- 如果不是第一次用Ansible安装的机器：
 # --- linux_first_install=no
+# --- 
+# --- 与当前执行不相关的操作系统组需要注释掉
 
-[mysql]
-192.168.232.11 linux_first_install=yes mysql_server_id=11
-192.168.232.12 linux_first_install=yes mysql_server_id=12
-192.168.232.13 linux_first_install=yes mysql_server_id=13
+#[mysql]
+#192.168.232.11 linux_first_install=yes mysql_server_id=11
+#192.168.232.12 linux_first_install=yes mysql_server_id=12
+#192.168.232.13 linux_first_install=yes mysql_server_id=13
 
 [python]
 # Python 版本信息：

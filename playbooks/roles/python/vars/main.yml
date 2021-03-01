@@ -16,14 +16,6 @@ file_python_install_media: "install_media/{{ python_install_media_name }}.tgz"
 # =====================
 # 文件夹
 
-directory_software_python: "{{ directory_software }}/python"
-
-directory_software_python_after_unzip: "{{ directory_software_python }}/{{ python_install_media_name }}"
-
-directory_python_software_base: "/usr/local/python/{{ python_install_media_name }}"
-
-directory_python_pip: "~/.pip"
-
 # =====================
 # 路径
 

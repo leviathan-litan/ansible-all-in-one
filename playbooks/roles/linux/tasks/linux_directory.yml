@@ -2,6 +2,11 @@
 # 任务：目录
 # =====================
 
+# 与当前执行不相关的操作系统组需要注释掉
+- name: 当前主机所在的Ansible Inventory组
+  debug:
+    msg: "{{ group_names }}"
+
 - name: 目录创建：操作系统
   file:
     path: "{{ item }}"
@@ -11,14 +16,15 @@
     state: directory
   with_items: "{{ list_directory_os }}"
 
-#- name: 目录创建：MySQL数据库
-#  file:
-#    path: "{{ item }}"
-#    owner: "{{ mysql_os_user_name }}"
-#    group: "{{ mysql_os_user_name }}"
-#    mode: 0755
-#    state: directory
-#  with_items: "{{ list_directory_database_mysql }}"
+- name: 目录创建：MySQL数据库
+  file:
+    path: "{{ item }}"
+    owner: "{{ mysql_os_user_name }}"
+    group: "{{ mysql_os_user_name }}"
+    mode: 0755
+    state: directory
+  with_items: "{{ list_directory_database_mysql }}"
+  when: "'mysql' in group_names"
 
 - name: 目录创建：Python
   file:
@@ -28,3 +34,4 @@
     mode: 0755
     state: directory
   with_items: "{{ list_directory_python }}"
+  when: "'python' in group_names"
