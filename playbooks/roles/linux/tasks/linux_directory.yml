@@ -16,6 +16,16 @@
     state: directory
   with_items: "{{ list_directory_os }}"
 
+- name: 目录创建：Java
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items: "{{ list_directory_java }}"
+  #when: "'java' in role_names"
+
 - name: 目录创建：MySQL数据库
   file:
     path: "{{ item }}"
@@ -35,3 +45,13 @@
     state: directory
   with_items: "{{ list_directory_python }}"
   when: "'python' in group_names"
+
+- name: 目录创建：ZooKeeper
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items: "{{ list_directory_zookeeper }}"
+  when: "'zookeeper' in group_names"

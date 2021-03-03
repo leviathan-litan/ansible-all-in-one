@@ -21,4 +21,4 @@
 - import_tasks: linux_selinux.yml
 
 # 时区
-- import_tasks: linux_timezone.yml
+#- import_tasks: linux_timezone.yml

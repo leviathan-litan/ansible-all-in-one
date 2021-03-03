@@ -10,8 +10,10 @@
 # --- linux_first_install=no
 # --- 
 # --- 与当前执行不相关的操作系统组需要注释掉
+# --- 【linux_first_install】会影响文件：/etc/hosts
+# |-- 如果角色【linux】中取消了hosts文件相关的任务，则不需要定义【linux_first_install】参数
 
-#[mysql]
+[mysql]
 #192.168.232.11 linux_first_install=yes mysql_server_id=11
 #192.168.232.12 linux_first_install=yes mysql_server_id=12
 #192.168.232.13 linux_first_install=yes mysql_server_id=13
@@ -29,6 +31,17 @@
 # |- 3.6 / 3.6.x x=latest - 3.6.13
 # |- 2.7 / 2.7.x x=latest - 2.7.18 / RHEL 7.x + CentOS 7.x 默认 2.7.5
 
+#192.168.232.11 linux_first_install=yes
+
+[zookeeper]
+# 注意：
+# ZooKeeper的myid不要修改
+
+192.168.232.11 linux_first_install=yes zookeeper_myid=0
+192.168.232.12 linux_first_install=yes zookeeper_myid=1
+192.168.232.13 linux_first_install=yes zookeeper_myid=2
+
+[clickhouse]
 192.168.232.11 linux_first_install=yes
 
 # =====================

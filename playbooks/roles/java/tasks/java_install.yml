@@ -1,0 +1,20 @@
+# =====================
+# Java / 安装
+# =====================
+
+# 上传安装介质
+- name: 上传安装介质
+  copy:
+    backup: yes
+    force: yes
+    owner: root
+    group: root
+    mode: 0755
+    src: "{{ file_java_install_media }}"
+    dest: "{{ directory_software_java }}"
+
+# 安装RPM包
+# -- Java包没有其他的依赖，可以直接安装
+- name: 安装RPM
+  shell: "rpm -ivh {{ directory_software_java }}/*.rpm"
+  ignore_errors: yes

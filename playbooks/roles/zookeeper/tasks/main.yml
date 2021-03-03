@@ -1,0 +1,6 @@
+# =====================
+# ZooKeeper / 任务
+# =====================
+
+# 安装
+- import_tasks: zookeeper_install.yml

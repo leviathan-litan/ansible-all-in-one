@@ -30,7 +30,7 @@
     mode: 0755
     # 如果【src】指定的路径是远端服务器上的地址，需要打开参数【remote_src】
     remote_src: yes
-    src: "{{ directory_mysql_install_media }}"
+    src: "{{ directory_software_mysql_after_unzip }}"
     dest: "{{ directory_mysql_software_base }}"
   when: mysql_install_media_type == "binary"
 

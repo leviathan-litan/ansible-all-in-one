@@ -74,6 +74,16 @@ directory_software_python_after_unzip: "{{ directory_software_python }}/{{ pytho
 directory_python_software_base: "/usr/local/python/{{ python_install_media_name }}"
 directory_python_pip: "~/.pip"
 
+# ------------- ZooKeeper
+
+directory_software_zookeeper: "{{ directory_software }}/zookeeper"
+directory_software_zookeeper_after_unzip: "{{ directory_software_zookeeper }}/{{ zookeeper_install_media_name }}"
+directory_zookeeper_software_base: "/usr/local/zookeeper_{{ zookeeper_install_media_name }}"
+directory_zookeeper_software_base_after_unzip: "{{ directory_zookeeper_software_base }}/{{ zookeeper_install_media_name }}"
+
+directory_zookeeper_data_base: "{{ directory_data }}/zookeeper"
+directory_zookeeper_dataDir: "{{ directory_zookeeper_data_base }}/dataDir"
+
 # =====================
 # 路径
 
@@ -137,6 +147,13 @@ list_directory_python:
   - "{{ directory_python_pip }}"
   # ------------------------
 
+list_directory_zookeeper:
+ # ZooKeeper
+ - "{{ directory_software_zookeeper }}"
+ - "{{ directory_zookeeper_software_base }}"
+ - "{{ directory_zookeeper_data_base }}"
+ - "{{ directory_zookeeper_dataDir }}"
+
 # YUM REPO文件
 list_yum_repo_file:
   - template: "{{ templiate_linux_yum_repo_centos_online }}"
@@ -144,6 +161,10 @@ list_yum_repo_file:
 
 # YUM 安装包
 list_yum_install_package:
+  # ------------
+  # 包含：
+  # -- nslookup
+  - bind-utils
   # ------------
   # 创建本地的YUM源
   - createrepo
@@ -169,6 +190,10 @@ list_yum_install_package:
   # ------------
   # Ansible的MySQL相关模块访问MySQL，需要安装这个RPM包
   - MySQL-python
+  # ------------
+  # 包含：
+  # -- netstat
+  - net-tools
   # ------------
   - openssl-devel
   - openssh-clients
@@ -217,7 +242,11 @@ mysql_os_user_id: 2000
 linux_arch_release: "7"
 
 # 时区
-linux_timezone: "/usr/share/zoneinfo/Asia/Shanghai"
+# -- UCT
+#linux_timezone: "/usr/share/zoneinfo/Asia/Shanghai"
+
+# -- UTC
+linux_timezone: "/usr/share/zoneinfo/UTC"
 
 # 公共YUM源地址
 linux_yum_repo_centos_baseurl: "mirrors.aliyun.com"

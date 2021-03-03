@@ -18,7 +18,7 @@ file_mysql_install_media: "install_media/mysql-5.7.32-linux-glibc2.12-x86_64.tar
 # MySQL：安装介质解压后路径
 # -- 安装介质包的名称
 # -- 该参数需要与【file_mysql_install_media】中的安装介质名称保持一致
-directory_mysql_install_media: "{{ directory_software_mysql }}/mysql-5.7.32-linux-glibc2.12-x86_64"
+directory_software_mysql_after_unzip: "{{ directory_software_mysql }}/mysql-5.7.32-linux-glibc2.12-x86_64"
 directory_mysql_software_base_after_unzip: "{{ directory_mysql_software_base }}/mysql-5.7.32-linux-glibc2.12-x86_64"
 
 # =====================

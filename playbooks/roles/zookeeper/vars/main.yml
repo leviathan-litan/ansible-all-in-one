@@ -1,0 +1,48 @@
+# =====================
+# 部署：ZooKeeper
+# =====================
+
+# =====================
+# 模板
+
+template_zookeeper_file_config: "zookeeper/zoo.cfg.j2"
+
+# =====================
+# 文件
+
+file_zookeeper_install_media: "install_media/{{ zookeeper_install_media_name }}.tar.gz"
+
+# =====================
+# 文件夹
+
+# =====================
+# 路径
+
+path_softlink_zookeeper_basedir_default: "/usr/local/zookeeper"
+path_zookeeper_file_config: "{{ path_softlink_zookeeper_basedir_default }}/conf/zoo.cfg"
+
+# =====================
+# 列表
+
+# =====================
+# 成员
+
+zookeeper_host_info:
+  - ip: "{{ host_info[0].ip }}"
+    port_leader: 2888
+    port_community: 3888
+    myid: 0
+  - ip: "{{ host_info[1].ip }}"
+    port_leader: 2888
+    port_community: 3888
+    myid: 1
+  - ip: "{{ host_info[2].ip }}"
+    port_leader: 2888
+    port_community: 3888
+    myid: 2
+
+# =====================
+# 变量
+
+zookeeper_install_media_name: "apache-zookeeper-3.6.2-bin"
+zookeeper_install_media_type: "binary"

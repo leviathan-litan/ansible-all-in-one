@@ -1,0 +1,6 @@
+# =====================
+# Java / 任务
+# =====================
+
+# Java 安装
+- import_tasks: java_install.yml

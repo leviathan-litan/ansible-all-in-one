@@ -1,0 +1,38 @@
+# =====================
+# 部署：ZooKeeper
+# =====================
+
+# Apache ZooKeeper - 官方下载页
+# https://zookeeper.apache.org/releases.html
+
+# ----------- Linux
+- name: Linux
+  hosts:
+    - zookeeper
+  vars_files:
+    - "roles/zookeeper/vars/main.yml"
+  roles:
+    - { role: linux }
+
+# ----------- Java
+# --- ZooKeeper 需要Java支持
+
+- name: Java
+  hosts:
+    - zookeeper
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: java }
+
+# ----------- ZooKeeper
+- name: ZooKeeper
+  hosts:
+    - zookeeper
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: zookeeper }
+
+# =====================
+# Finished
