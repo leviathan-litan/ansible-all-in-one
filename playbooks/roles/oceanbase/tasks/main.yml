@@ -1,0 +1,6 @@
+# =====================
+# OceanBase / 任务
+# =====================
+
+# 安装：OceanBase
+- import_tasks: oceanbase_install.yml

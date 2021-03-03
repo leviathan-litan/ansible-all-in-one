@@ -84,6 +84,13 @@ directory_zookeeper_software_base_after_unzip: "{{ directory_zookeeper_software_
 directory_zookeeper_data_base: "{{ directory_data }}/zookeeper"
 directory_zookeeper_dataDir: "{{ directory_zookeeper_data_base }}/dataDir"
 
+# ------------- OceanBase
+
+directory_software_oceanbase: "{{ directory_software }}/oceanbase"
+directory_software_oceanbase_after_unzip: "{{ directory_software_oceanbase }}/ob-deploy"
+
+directory_oceanbase_data_base: "{{ directory_data }}/oceanbase"
+
 # =====================
 # 路径
 
@@ -148,11 +155,16 @@ list_directory_python:
   # ------------------------
 
 list_directory_zookeeper:
- # ZooKeeper
- - "{{ directory_software_zookeeper }}"
- - "{{ directory_zookeeper_software_base }}"
- - "{{ directory_zookeeper_data_base }}"
- - "{{ directory_zookeeper_dataDir }}"
+  # ZooKeeper
+  - "{{ directory_software_zookeeper }}"
+  - "{{ directory_zookeeper_software_base }}"
+  - "{{ directory_zookeeper_data_base }}"
+  - "{{ directory_zookeeper_dataDir }}"
+
+list_directory_oceanbase:
+  # OceanBase
+  - "{{ directory_software_oceanbase }}"
+  - "{{ directory_oceanbase_data_base }}"
 
 # YUM REPO文件
 list_yum_repo_file:

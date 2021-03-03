@@ -4,6 +4,7 @@
 
 # 文件：/etc/hosts
 - import_tasks: linux_file_etc_hosts.yml
+  when: linux_first_install is defined
 
 # 创建用户
 - import_tasks: linux_user.yml
@@ -21,4 +22,6 @@
 - import_tasks: linux_selinux.yml
 
 # 时区
+# -- UTC
+# -- CST
 #- import_tasks: linux_timezone.yml

@@ -1,0 +1,27 @@
+# =====================
+# OceanBase / 变量
+# =====================
+
+# =====================
+# 模板
+
+template_oceanbase_ob_deploy_file_config: "oceanbase/ob-deploy_config.py.j2"
+
+# =====================
+# 文件
+
+file_oceanbase_install_media: "install_media/ob-deploy.tar"
+
+# =====================
+# 文件夹
+
+# =====================
+# 路径
+
+path_oceanbase_ob_deploy_file_config: "{{ directory_software_oceanbase_after_unzip }}/config.py"
+
+# =====================
+# 列表
+
+# =====================
+# 变量

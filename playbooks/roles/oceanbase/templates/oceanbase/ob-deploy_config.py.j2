@@ -1,0 +1,24 @@
+# =====================
+# OceanBase / 试用版配置文件
+# =====================
+
+load('obi,obt-patch,mini-mode,sample-db,sysbench')
+if not indocker():
+    home = '{{ directory_oceanbase_data_base }}'
+obs_cfg.update(mini_mode_cfg)
+obs_cfg.update(system_memory='5G', memory_limit='8G', datafile_size='10G')
+
+# 定义一个单server的ob集群，mysql端口号2881，rpc端口号2882
+#ob1 = OBI('{{ ansible_default_ipv4.address }}:2882:2881')
+ob1 = OBI('127.0.0.1:2882:2881')
+
+# 定义另一个单server的ob集群，mysql端口号/rpc端口号由uid hash生成
+#ob2 = OBI('{{ ansible_default_ipv4.address }}')
+ob2 = OBI('127.0.0.1')
+
+# 单个机器上起3个observer
+#ob3 = OBI('{{ ansible_default_ipv4.address }}@[z1,z2,z3]', dev='lo', is_local=True)
+ob3 = OBI('127.0.0.1@[z1,z2,z3]', dev='lo', is_local=True)
+
+# =====================
+# Finished

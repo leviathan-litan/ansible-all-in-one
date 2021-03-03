@@ -1,0 +1,47 @@
+# =====================
+# 部署：OceanBase
+# =====================
+# -- 试用版
+
+# 蚂蚁集团：分布式数据库 OceanBase
+# 官方下载页：
+# https://www.oceanbase.com/download
+
+# 蚂蚁集团：分布式数据库 OceanBase
+# -- 内存：8G
+# -- 磁盘 / 数据盘：20G
+# -- Python 2.7+
+
+# 使用客户端连接
+# cd /software/oceanbase/ob-deploy/ && ./hap.py ob1.obmysql
+
+# ----------- Linux
+- name: Linux
+  hosts:
+    - oceanbase
+  vars_files:
+    - "roles/python/vars/main.yml"
+    - "roles/oceanbase/vars/main.yml"
+  roles:
+    - { role: linux }
+
+# ----------- Python
+- name: Python
+  hosts:
+    - python
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: python }
+
+# ----------- OceanBase
+- name: OceanBase
+  hosts:
+    - oceanbase
+  vars_files:
+    - "roles/linux/vars/main.yml"
+  roles:
+    - { role: oceanbase }
+
+# =====================
+# Finished

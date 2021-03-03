@@ -1,0 +1,37 @@
+# =====================
+# OceanBase / 安装
+# =====================
+
+- name: 安装：上传安装介质
+  unarchive:
+    # ---------------
+    # 解压后权限
+    owner: root
+    group: root
+    mode: 0755
+    # ---------------
+    # 解压操作
+    # -- 解压文件
+    src: "{{ file_oceanbase_install_media }}"
+    # -- 解压目标
+    dest: "{{ directory_software_oceanbase }}"
+    # ---------------
+
+- name: 修改配置文件：config.py
+  template:
+    backup: yes
+    src: "{{ template_oceanbase_ob_deploy_file_config }}"
+    dest: "{{ path_oceanbase_ob_deploy_file_config }}"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: 添加环境变量 / 追加
+  shell: "echo '\n# OceanBase\nexport PATH={{ directory_software_oceanbase_after_unzip }}:$PATH\n' >> ~/.bash_profile"
+
+- name: OceanBase：初始化
+  shell: "cd {{ directory_software_oceanbase_after_unzip }} && ./hap.py ob1.reboot"
+  ignore_errors: yes
+
+# 使用客户端连接
+# cd /software/oceanbase/ob-deploy/ && ./hap.py ob1.obmysql

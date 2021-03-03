@@ -11,6 +11,7 @@
     - zookeeper
   vars_files:
     - "roles/zookeeper/vars/main.yml"
+    - "roles/java/vars/main.yml"
   roles:
     - { role: linux }
 

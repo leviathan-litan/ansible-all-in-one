@@ -31,18 +31,33 @@
 # |- 3.6 / 3.6.x x=latest - 3.6.13
 # |- 2.7 / 2.7.x x=latest - 2.7.18 / RHEL 7.x + CentOS 7.x 默认 2.7.5
 
-#192.168.232.11 linux_first_install=yes
+192.168.232.11 linux_first_install=yes
+
+[java]
+#192.168.232.11
+#192.168.232.12
+#192.168.232.13
 
 [zookeeper]
 # 注意：
 # ZooKeeper的myid不要修改
 
-192.168.232.11 linux_first_install=yes zookeeper_myid=0
-192.168.232.12 linux_first_install=yes zookeeper_myid=1
-192.168.232.13 linux_first_install=yes zookeeper_myid=2
+#192.168.232.11 linux_first_install=yes zookeeper_myid=0
+#192.168.232.12 linux_first_install=yes zookeeper_myid=1
+#192.168.232.13 linux_first_install=yes zookeeper_myid=2
+
+[oceanbase]
+# 蚂蚁集团：分布式数据库 OceanBase
+# -- 内存：8G
+# -- 磁盘：20G
+# -- Python 2.7+
+
+192.168.232.11
+#192.168.232.12
+#192.168.232.13
 
 [clickhouse]
-192.168.232.11 linux_first_install=yes
+#192.168.232.11 linux_first_install=yes
 
 # =====================
 # Finished
